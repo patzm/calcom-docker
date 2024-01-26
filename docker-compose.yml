@@ -26,7 +26,7 @@ services:
       - traefik.enable = false
 
   calcom:
-    image: calcom.docker.scarf.sh/calcom/${DOMAIN}
+    image: calcom.docker.scarf.sh/calcom/fungtional
     build:
       context: .
       dockerfile: Dockerfile
