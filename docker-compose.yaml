@@ -2,6 +2,11 @@
 version: '3.8'
 
 networks:
+  auth_internal:
+    external: true
+  traefik:
+    name: traefik
+    external: true
   stack:
     name: stack
     external: false
@@ -31,31 +36,45 @@ services:
         DATABASE_URL: ${DATABASE_URL}
       network: stack
     restart: unless-stopped
+    depends_on:
+      - database
     networks:
       - stack
-    ports:
-      - 3000:3000
+      - traefik
     env_file: .env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
-    depends_on:
-      - database
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.calcom-patz.rule=Host(`cal.patz.app`)
+      - traefik.http.routers.calcom-patz.entrypoints=websecure
+      - traefik.http.routers.calcom-patz.tls.certresolver=patz.app
+      - traefik.http.routers.calcom-patz.tls.domains[0].main=patz.app
+      - traefik.http.routers.calcom-patz.tls.domains[0].sans=cal.patz.app
+      - traefik.http.services.calcom-patz.loadbalancer.server.port=3000
 
-# Optional use of Prisma Studio. In production, comment out or remove the section below to prevent unwanted access to your database.
   studio:
     image: calcom.docker.scarf.sh/calcom/cal.com
     restart: unless-stopped
+    depends_on:
+      - database
     networks:
+      - auth_internal
       - stack
-    ports:
-      - 5555:5555
+      - traefik
     env_file: .env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
-    depends_on:
-      - database
     command:
       - npx
       - prisma
       - studio
-# END SECTION: Optional use of Prisma Studio.
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.calcom-patz-studio.rule=Host(`cal-studio.patz.app`)
+      - traefik.http.routers.calcom-patz-studio.entrypoints=websecure
+      - traefik.http.routers.calcom-patz-studio.tls.certresolver=patz.app
+      - traefik.http.routers.calcom-patz-studio.tls.domains[0].main=patz.app
+      - traefik.http.routers.calcom-patz-studio.tls.domains[0].sans=cal-studio.patz.app
+      - traefik.http.routers.calcom-patz-studio.middlewares=keycloak@file
+      - traefik.http.services.calcom-patz-studio.loadbalancer.server.port=55555
