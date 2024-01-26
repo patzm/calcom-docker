@@ -1,9 +1,6 @@
 # Use postgres/example user/password credentials
 version: '3.8'
 
-volumes:
-  database-data:
-
 networks:
   stack:
     name: stack
@@ -15,7 +12,7 @@ services:
     image: postgres
     restart: unless-stopped
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - /mnt/ssd-1tb/docker/calcom/db:/var/lib/postgresql/data/
     env_file: .env
     networks:
       - stack
