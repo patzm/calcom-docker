@@ -53,6 +53,4 @@ services:
       - traefik.http.routers.calcom-${ID}.rule=Host(`cal.${DOMAIN}`)
       - traefik.http.routers.calcom-${ID}.entrypoints=websecure
       - traefik.http.routers.calcom-${ID}.tls.certresolver=${DOMAIN}
-      - traefik.http.routers.calcom-${ID}.tls.domains[0].main=${DOMAIN}
-      - traefik.http.routers.calcom-${ID}.tls.domains[0].sans=cal.${DOMAIN}
       - traefik.http.services.calcom-${ID}.loadbalancer.server.port=3000
