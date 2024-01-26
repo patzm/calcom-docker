@@ -13,7 +13,7 @@ services:
   database:
     container_name: database
     image: postgres
-    restart: always
+    restart: unless-stopped
     volumes:
       - database-data:/var/lib/postgresql/data/
     env_file: .env
@@ -33,7 +33,7 @@ services:
         CALENDSO_ENCRYPTION_KEY: ${CALENDSO_ENCRYPTION_KEY}
         DATABASE_URL: ${DATABASE_URL}
       network: stack
-    restart: always
+    restart: unless-stopped
     networks:
       - stack
     ports:
@@ -47,7 +47,7 @@ services:
 # Optional use of Prisma Studio. In production, comment out or remove the section below to prevent unwanted access to your database.
   studio:
     image: calcom.docker.scarf.sh/calcom/cal.com
-    restart: always
+    restart: unless-stopped
     networks:
       - stack
     ports:
