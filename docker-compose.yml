@@ -13,7 +13,6 @@ networks:
 
 services:
   database:
-    container_name: database
     image: postgres
     restart: unless-stopped
     volumes:
