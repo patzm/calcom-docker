@@ -19,7 +19,6 @@ services:
     volumes:
       - /mnt/ssd-1tb/docker/calcom/db:/var/lib/postgresql/data/
     env_file:
-      - .env
       - stack.env
     networks:
       - stack
@@ -44,7 +43,6 @@ services:
       - stack
       - traefik
     env_file:
-      - .env
       - stack.env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
@@ -67,7 +65,6 @@ services:
       - stack
       - traefik
     env_file:
-      - .env
       - stack.env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
