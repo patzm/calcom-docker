@@ -14,6 +14,7 @@ networks:
 services:
   database:
     image: postgres
+    hostname: database
     restart: unless-stopped
     volumes:
       - /mnt/ssd-1tb/docker/calcom-${DOMAIN}/db:/var/lib/postgresql/data/
