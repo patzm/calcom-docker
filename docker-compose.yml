@@ -18,7 +18,9 @@ services:
     restart: unless-stopped
     volumes:
       - /mnt/ssd-1tb/docker/calcom/db:/var/lib/postgresql/data/
-    env_file: .env
+    env_file:
+      - .env
+      - stack.env
     networks:
       - stack
 
@@ -41,7 +43,9 @@ services:
     networks:
       - stack
       - traefik
-    env_file: .env
+    env_file:
+      - .env
+      - stack.env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
     labels:
@@ -62,7 +66,9 @@ services:
       - auth_internal
       - stack
       - traefik
-    env_file: .env
+    env_file:
+      - .env
+      - stack.env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
     command:
