@@ -22,6 +22,8 @@ services:
       - stack.env
     networks:
       - stack
+    labels:
+      - traefik.enable = false
 
   calcom:
     image: calcom.docker.scarf.sh/calcom/cal.com
