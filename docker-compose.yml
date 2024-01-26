@@ -17,7 +17,7 @@ services:
     image: postgres
     restart: unless-stopped
     volumes:
-      - /mnt/ssd-1tb/docker/calcom/db:/var/lib/postgresql/data/
+      - /mnt/ssd-1tb/docker/calcom-${DOMAIN}/db:/var/lib/postgresql/data/
     env_file:
       - stack.env
     networks:
@@ -50,9 +50,9 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.calcom-patz.rule=Host(`cal.patz.app`)
-      - traefik.http.routers.calcom-patz.entrypoints=websecure
-      - traefik.http.routers.calcom-patz.tls.certresolver=patz.app
-      - traefik.http.routers.calcom-patz.tls.domains[0].main=patz.app
-      - traefik.http.routers.calcom-patz.tls.domains[0].sans=cal.patz.app
-      - traefik.http.services.calcom-patz.loadbalancer.server.port=3000
+      - traefik.http.routers.calcom-${DOMAIN}.rule=Host(`cal.${DOMAIN}`)
+      - traefik.http.routers.calcom-${DOMAIN}.entrypoints=websecure
+      - traefik.http.routers.calcom-${DOMAIN}.tls.certresolver=${DOMAIN}
+      - traefik.http.routers.calcom-${DOMAIN}.tls.domains[0].main=${DOMAIN}
+      - traefik.http.routers.calcom-${DOMAIN}.tls.domains[0].sans=cal.${DOMAIN}
+      - traefik.http.services.calcom-${DOMAIN}.loadbalancer.server.port=3000
