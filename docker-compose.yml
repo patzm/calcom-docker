@@ -50,9 +50,9 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.calcom-${DOMAIN}.rule=Host(`cal.${DOMAIN}`)
-      - traefik.http.routers.calcom-${DOMAIN}.entrypoints=websecure
-      - traefik.http.routers.calcom-${DOMAIN}.tls.certresolver=${DOMAIN}
-      - traefik.http.routers.calcom-${DOMAIN}.tls.domains[0].main=${DOMAIN}
-      - traefik.http.routers.calcom-${DOMAIN}.tls.domains[0].sans=cal.${DOMAIN}
-      - traefik.http.services.calcom-${DOMAIN}.loadbalancer.server.port=3000
+      - traefik.http.routers.calcom-${ID}.rule=Host(`cal.${DOMAIN}`)
+      - traefik.http.routers.calcom-${ID}.entrypoints=websecure
+      - traefik.http.routers.calcom-${ID}.tls.certresolver=${DOMAIN}
+      - traefik.http.routers.calcom-${ID}.tls.domains[0].main=${DOMAIN}
+      - traefik.http.routers.calcom-${ID}.tls.domains[0].sans=cal.${DOMAIN}
+      - traefik.http.services.calcom-${ID}.loadbalancer.server.port=3000
