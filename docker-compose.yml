@@ -82,4 +82,4 @@ services:
       - traefik.http.routers.calcom-patz-studio.tls.domains[0].main=patz.app
       - traefik.http.routers.calcom-patz-studio.tls.domains[0].sans=cal-studio.patz.app
       - traefik.http.routers.calcom-patz-studio.middlewares=keycloak@file
-      - traefik.http.services.calcom-patz-studio.loadbalancer.server.port=55555
+      - traefik.http.services.calcom-patz-studio.loadbalancer.server.port=5555
